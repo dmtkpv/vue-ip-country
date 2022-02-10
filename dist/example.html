@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="vue-ip-country.js"></script>
+</head>
+<body>
+    <script>
+
+        const { ref, createApp } = Vue;
+
+        function getIP () {
+            const random = (min = 0, max = 255) => Math.floor(min + (max - min) * Math.random())
+            return random(1) + '.' + random() + '.' + random() + '.' + random();
+        }
+
+        function setup () {
+            const ip = ref(getIP());
+            setInterval(() => ip.value = getIP(), 3000);
+            return { ip };
+        }
+
+        const app = createApp({
+            template: '<ip-country :ip="ip" />',
+            setup
+        });
+
+        app.use(VueIpCountry);
+        app.mount('body');
+
+    </script>
+
+</body>
+</html>
